@@ -46,6 +46,13 @@ export default function RootLayout({
                     routerProvider={routerProvider}
                     notificationProvider={useNotificationProvider}
                     options={refineOptions}
+                    resources={[
+                      {
+                        name: "candidates",
+                        list: "/candidates",
+                        show: "/candidates/:id",
+                      },
+                    ]}
                   >
                     {children}
                     <RefineKbar />
