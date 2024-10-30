@@ -47,7 +47,7 @@ export default async function CandidatePage({
       
       <Card>
         <CardContent>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom sx={{color: 'primary.main'}}>
             {candidate.first_name} {candidate.last_name}
           </Typography>
           

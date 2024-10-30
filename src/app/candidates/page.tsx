@@ -1,6 +1,7 @@
 import { GetListResponse } from "@refinedev/core";
 import { Candidate } from "@interfaces/interfaces";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -46,65 +47,79 @@ export default async function CandidatesPage() {
   const candidates = await getCandidates();
 
   return (
-    <Paper elevation={2} sx={{ 
-      margin: 2, 
-      padding: 2,
-      backgroundColor: 'background.paper',
-    }}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Job Title</TableCell>
-            <TableCell>Seniority Level</TableCell>
-            <TableCell>Skills</TableCell>
-            <TableCell>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {candidates.data.map((candidate) => (
-            <TableRow key={candidate.id}>
-              <TableCell>
-                <Link 
-                  href={`/candidates/${candidate.id}`} passHref>
-                  <Button variant="text" sx={{ color: 'primary.main', fontWeight: 600 }}>
-                    {candidate.first_name} {candidate.last_name}
-                  </Button>
-                </Link>
-              </TableCell>
-              <TableCell>{candidate.job_title}</TableCell>
-              <TableCell>{candidate.seniority_level}</TableCell>
-              <TableCell>
-                {candidate.skills.map((skill) => (
-                  <Chip
-                    key={skill}
-                    label={skill}
-                    size="small"
-                    sx={{ 
-                      margin: 0.5,
-                      backgroundColor: 'primary.main',
-                      color: 'primary.contrastText',
-                    }}
-                  />
-                ))}
-              </TableCell>
-              <TableCell>
-                <Link href={`/candidates/${candidate.id}`} passHref>
-                  <Button 
-                    variant="contained" 
-                    // color="primary"
-                    sx={{
-                      color: 'primary.contrastText',
-                    }}
-                    >
-                    View Details
-                  </Button>
-                </Link>
-              </TableCell>
+    <Box sx={{ margin: 2 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'flex-end', 
+        m: 2,
+        }}>
+        <Link href="/candidates/create" passHref>
+          <Button variant="contained" sx={{color: 'primary.contrastText'}}>
+            Create New Candidate
+          </Button>
+        </Link>
+      </Box>
+
+      <Paper elevation={2} sx={{ 
+        margin: 2, 
+        padding: 2,
+        backgroundColor: 'background.paper',
+      }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Job Title</TableCell>
+              <TableCell>Seniority Level</TableCell>
+              <TableCell>Skills</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {candidates.data.map((candidate) => (
+              <TableRow key={candidate.id}>
+                <TableCell>
+                  <Link 
+                    href={`/candidates/${candidate.id}`} passHref>
+                    <Button variant="text" sx={{ color: 'primary.main', fontWeight: 600 }}>
+                      {candidate.first_name} {candidate.last_name}
+                    </Button>
+                  </Link>
+                </TableCell>
+                <TableCell>{candidate.job_title}</TableCell>
+                <TableCell>{candidate.seniority_level}</TableCell>
+                <TableCell>
+                  {candidate.skills.map((skill) => (
+                    <Chip
+                      key={skill}
+                      label={skill}
+                      size="small"
+                      sx={{ 
+                        margin: 0.5,
+                        backgroundColor: 'primary.main',
+                        color: 'primary.contrastText',
+                      }}
+                    />
+                  ))}
+                </TableCell>
+                <TableCell>
+                  <Link href={`/candidates/${candidate.id}`} passHref>
+                    <Button 
+                      variant="contained" 
+                      // color="primary"
+                      sx={{
+                        color: 'primary.contrastText',
+                      }}
+                      >
+                      View Details
+                    </Button>
+                  </Link>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </Box>
   );
 }
