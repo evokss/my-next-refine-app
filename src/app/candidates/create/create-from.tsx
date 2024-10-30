@@ -20,6 +20,10 @@ import { Candidate } from "@/interfaces/interfaces";
 const SENIORITY_LEVELS = ["Junior", "Middle", "Senior", "Lead"];
 const AVAILABLE_SKILLS = ["React", "Next.js", "TypeScript", "JavaScript", "Node.js", "Python", "Java", "C#", "SQL"];
 
+type FormErrors = {
+  [K in keyof Candidate]: string;
+};
+
 export function CreateCandidateForm() {
   const router = useRouter();
   const [formData, setFormData] = useState<Partial<Candidate>>({
@@ -30,11 +34,13 @@ export function CreateCandidateForm() {
     skills: [],
   });
   
-  const [errors, setErrors] = useState<Partial<Candidate>>({});
+  // FormErrors type for errors state
+  const [errors, setErrors] = useState<Partial<FormErrors>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<Candidate> = {};
+    // Use FormErrors type for newErrors
+    const newErrors: Partial<FormErrors> = {};
 
     if (!formData.first_name?.trim()) {
       newErrors.first_name = "First name is required";
@@ -49,7 +55,7 @@ export function CreateCandidateForm() {
       newErrors.seniority_level = "Seniority level is required";
     }
     if (!formData.skills?.length) {
-      newErrors.skills = ["At least one skill is required"];
+      newErrors.skills = "At least one skill is required";
     }
 
     setErrors(newErrors);
