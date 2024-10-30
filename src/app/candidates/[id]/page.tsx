@@ -10,6 +10,11 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
+// Ensure page is dynamic
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
+
 async function getCandidate(id: string): Promise<Candidate | null> {
   try {
     const res = await fetch('http://localhost:3000/data.json');

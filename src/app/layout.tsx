@@ -50,6 +50,7 @@ export default function RootLayout({
                       {
                         name: "candidates",
                         list: "/candidates",
+                        create: "/candidates/create",
                         show: "/candidates/:id",
                       },
                     ]}

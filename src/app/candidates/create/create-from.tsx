@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { Candidate } from "@/interfaces/interfaces";
 
-const SENIORITY_LEVELS = ["Junior", "Mid", "Senior", "Lead"];
+const SENIORITY_LEVELS = ["Junior", "Middle", "Senior", "Lead"];
 const AVAILABLE_SKILLS = ["React", "Next.js", "TypeScript", "JavaScript", "Node.js", "Python", "Java", "C#", "SQL"];
 
 export function CreateCandidateForm() {
@@ -62,30 +62,47 @@ export function CreateCandidateForm() {
     if (!validateForm()) {
       return;
     }
-
+  
     setIsSubmitting(true);
-
+  
     try {
       const response = await fetch('/api/candidates', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // Add cache control headers to prevent caching
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
         },
         body: JSON.stringify({
-          ...formData,
           id: crypto.randomUUID(),
+          ...formData
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to create candidate');
       }
 
-      router.push('/candidates');
+      // Wait for the response to complete before navigation
+      await response.json();
+      
+      // Force a revalidation of the candidates data
+      await fetch('/api/candidates', { 
+        method: 'GET',
+        headers: { 'Cache-Control': 'no-cache' }
+      });
+
+      // Refresh the router cache before navigation
       router.refresh();
+      
+      // Small delay to ensure refresh completes
+      setTimeout(() => {
+        router.push('/candidates');
+      }, 100);
+      
     } catch (error) {
       console.error('Error creating candidate:', error);
-      // Handle error (show error message to user)
     } finally {
       setIsSubmitting(false);
     }

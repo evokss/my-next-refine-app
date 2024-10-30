@@ -13,6 +13,11 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 
+// Ensure page is dynamic
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
+
 async function getCandidates(): Promise<GetListResponse<Candidate>> {
   try {
     const res = await fetch('http://localhost:3000/data.json');
@@ -105,8 +110,7 @@ export default async function CandidatesPage() {
                 <TableCell>
                   <Link href={`/candidates/${candidate.id}`} passHref>
                     <Button 
-                      variant="contained" 
-                      // color="primary"
+                      variant="contained"
                       sx={{
                         color: 'primary.contrastText',
                       }}
