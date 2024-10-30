@@ -48,6 +48,10 @@ export default function RootLayout({
                     options={refineOptions}
                     resources={[
                       {
+                        name: "home",
+                        list: "/",
+                      },
+                      {
                         name: "candidates",
                         list: "/candidates",
                         create: "/candidates/create",

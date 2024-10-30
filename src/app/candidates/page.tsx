@@ -55,9 +55,14 @@ export default async function CandidatesPage() {
     <Box sx={{ margin: 2 }}>
       <Box sx={{ 
         display: 'flex', 
-        justifyContent: 'flex-end', 
+        justifyContent: "space-between", 
         m: 2,
         }}>
+        <Link href="/" passHref>
+          <Button variant="contained" sx={{color: 'primary.contrastText'}}>
+            Home Page
+          </Button>
+        </Link>
         <Link href="/candidates/create" passHref>
           <Button variant="contained" sx={{color: 'primary.contrastText'}}>
             Create New Candidate
